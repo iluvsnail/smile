@@ -1,0 +1,3 @@
+*.css linguist-language=scala
+*.html linguist-language=scala
+*.js linguist-language=scala

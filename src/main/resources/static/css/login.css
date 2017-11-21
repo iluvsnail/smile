@@ -1,0 +1,128 @@
+@CHARSET "UTF-8";
+body {
+	padding: 73px 0 0;
+	background-color: #f5f5f5;
+}
+
+.signin-box {
+	position: relative;
+	width: 400px;
+	margin: 0 auto;
+}
+
+.signin-header, .signin-body {
+	padding: 0 25px;
+	background-color: #FFF;
+	border: 1px solid #E4E4E4;
+}
+
+.signin-header {
+	height: 50px;
+	padding: 0;
+	margin-left: 50px;
+	border-left: 0 none;
+	border-bottom: 0 none;
+}
+
+.signin-title {
+	position: absolute;
+	left: 0; top: 22px;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.signin-logo {
+	height: 100%;
+}
+
+.signin-body {
+	padding-top: 32px;
+	padding-bottom: 27px;
+	border-top: 0 none;
+}
+
+.signin-stamp {
+	position: absolute;
+	left: 0; top: 0;
+	display: block;
+	width: 58px;
+	height: 53px;
+	background: url("img/login-bg-stamp.png") no-repeat 0 0;
+	background-size: cover;
+}
+
+.form-signin .input-group input.form-control {
+	height: 35px;
+	font-size: 16px;
+	padding: 0 9px 0 41px;
+	border-radius: 4px;
+}
+
+.input-group {
+	position: relative;
+	width: 100%;
+	margin-bottom: 18px;
+}
+
+.signin-icons {
+	background: url("img/login-icons.png") no-repeat;
+}
+
+.signin-icon-input {
+	display: block;
+	width: 32px;
+	height: 33px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	position: absolute;
+	left: 1px; top: 1px;
+	z-index: 3;
+}
+
+.signin-icon-user {
+	background-position: -1px 1px;
+}
+
+.signin-icon-pwd {
+	background-position: -32px 0;
+}
+
+.signin-icon-br {
+	display: block;
+	width: 1px;
+	height: 100%;
+	background-position: -64px 0;
+	position: absolute;
+	right: 0; top: 0;
+}
+
+.checkbox {
+	margin: 3px 0 20px;
+}
+
+.checkbox > label + label {
+	margin-left: 32px;
+}
+
+#signin-btn {
+	width: 100%;
+	height: 43px;
+	line-height: 43px;
+	padding: 0;
+	font-size: 16px;
+}
+.signin-title > span{
+	font-size: 30px;
+	font-weight: 900;
+}
+.signin-title .title1{
+	color:#1B9CE1;
+}
+.signin-title .title2{
+	color:#777676;
+}
+#body{
+	background: #f9f9f9 url(images/cloth.jpg) repeat top left;
+}

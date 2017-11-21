@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link th:href="@{css/bootstrap.css}"  rel="stylesheet">
+    <link th:href="@{css/login.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{js/jquery.js}"></script>
+</head>
+<body >
+
+<div class="signin-box">
+    <div class="signin-header">
+        <div class="signin-title">
+            <span class="title1">Smile </span><span class="title2"> Login</span>
+        </div>
+    </div>
+    <div class="signin-body">
+        <form id="form-signin" class="form-signin" action="login" method="post">
+            <input type="hidden" name="action" value="login">
+            <div class="input-group">
+				<span class="signin-icons signin-icon-input signin-icon-user">
+					<i class="signin-icons signin-icon-br"></i>
+				</span>
+                <input id="account" class="form-control" name="name" type="text">
+                <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>
+            <div class="input-group">
+				<span class="signin-icons signin-icon-input signin-icon-pwd">
+					<i class="signin-icons signin-icon-br"></i>
+				</span>
+                <input type="hidden" id="passd" name="passwd" value="">
+                <input id="password" class="form-control" name="password" type="password">
+            </div>
+            <button id="signin-btn" type="button" class="btn btn-primary" onclick="submitForm()">登  录</button>
+        </form>
+    </div>
+    <i class="signin-stamp"></i>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function submitForm() {
+        $("#passd").val($("#password").val());
+        $("#form-signin").submit();
+    }
+    $(document).on("keypress", "#account,#password", function(e) {
+        if(e.keyCode == 13) {
+            submitForm();
+        }
+    });
+</script>

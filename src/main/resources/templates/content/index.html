@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>时间匆匆流逝</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Lateral On-Scroll Sliding with jQuery - Timeline Example with CSS3" />
+    <meta name="keywords"
+          content="lateral, sides, slide, scroll, jquery, css3, timeline" />
+    <meta name="author" content="Codrops" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demos.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/css.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fileinput.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <script type="text/javascript" th:src="@{/js/modernizr.custom.11333.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div id="countdownLeftTop" class="countdownHolderLeftTop"></div>
+    <div class="header">
+        <a href="javascript:return false;"> <strong></strong>欢迎小师妹！
+        </a>
+        <span class="right">
+            <a target="_blank" href="/chat/index">点击进入聊天室</a>
+            <a target="_blank" href="/getQRcode">点击获取二维码</a>
+			<a href="/tmp"> <strong th:text="'今天是'+${date}+'(点我查看天气)'"></strong></a>
+			</span>
+        <div class="clr"></div>
+    </div>
+    <button id="addContent" class="btn btn-info btn-lg">囧事 诞生</button>
+    <h1>那些年，我们匆匆经历过的那些事</h1>
+    <h2 class="ss-subtitle">故事进行到这里了</h2>
+    <div id="ss-links" class="ss-links">
+    </div>
+    <div id="ss-container" class="ss-container"></div>
+    <div class="loadMore">
+        <button id="loadMore"  class="btn btn-link"> 加 载 更 多 </button>
+    </div>
+    <div id="allcountdown" class="countdownLeftBottom"></div>
+    <div id="countdown" class="countdownHolder"></div>
+</div>
+<div class="modal fade" id="myModal" role="dialog" tabindex="-1"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">囧事诞生</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="content-title" class="col-sm-2 control-label">
+                            囧 事 ：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="content-title"
+                                   placeholder="输入囧事吧" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content-time" class="col-sm-2 control-label">
+                            时 间 ：</label>
+                        <div class="col-sm-10">
+                            <input type="hidden"
+                                   id="content-id" />
+                            <input type="text" class="form-control timepicker"
+                                   id="content-time"
+                                   placeholder="囧事发生的时间(举个栗子：2015-05-05 16:40:01)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content-content" class="col-sm-2 control-label">
+                            内 容 ：</label>
+                        <div class="col-sm-10">
+								<textarea id="content-content" class="form-control" rows="5"
+                                          placeholder="囧事具体详情到这里来"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content-content" class="col-sm-2 control-label">
+                            图 片 ：</label>
+                        <div class="col-sm-10">
+                            <input id="file-zh" name="file-zh" type="file" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="saveOrUpdate" type="button" class="btn btn-primary"
+                        onclick="">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"
+        th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/jquery-ui.min.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/jquery-ui-timepicker-addon.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/smile.js}"></script>
+<script th:src="@{/js/fileinput.js}" type="text/javascript"></script>
+<!--简体中文-->
+<script th:src="@{/js/locales/zh.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    //时间
+    $("#countdownLeftTop").append(SMILE.showDays('[[${dayCount2}]]'));
+    $("#countdown").append(SMILE.showDays('[[${dayCount}]]'));
+    $("#allcountdown").append(SMILE.showDays('[[${allCount}]]'));
+    $('#file-zh').fileinput({
+        language: 'zh',
+        uploadUrl: '/content/uploadImage',
+        maxFileCount: 1,
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        uploadExtraData : function(){
+            var rest = {};
+            rest.id=$("#content-id",$("#myModal")).val();
+            return rest;
+        }
+    }).on("fileuploaded",function(event,data){
+        $("#content-id",$("#myModal")).val(data.response.id);
+        var $contentDiv = $("#"+data.response.id);
+        $(".ss-circle",$contentDiv.hasClass("ss-right")?$contentDiv.prev():$contentDiv.next()).css("background-image","url(/content/img/"+data.response.id+"/?v="+SMILE.getRandom(100)+")")
+    });
+</script>
+</body>
+</html>

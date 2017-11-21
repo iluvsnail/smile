@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <title></title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/temp.css}" rel="stylesheet">
+    <style type="text/css">
+        .container-fluid{
+            height:400px;
+            font-size: 25px;
+            color: #FF8a00;
+            top:25%;
+        }
+        .bottom{
+            position:fixed;
+            right:50px;
+            bottom:50px;
+        }
+        #weatherDiv{
+            top:25%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div  class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2 h1">
+        天气预报
+    </div>
+    <div id="weatherDiv" class="col-md-12 col-sm-12">
+
+    </div>
+    <div class="bottom" th:text="'Since Sep 15th 2014，we know for '+${dayCount}+' days !'">
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var template={
+        "0":"晴",
+        "1":"多云",
+        "2":"阴",
+        "3":"阵雨",
+        "4":"雷阵雨",
+        "5":"雷阵雨伴有冰雹",
+        "6":"雨夹雪",
+        "7":"小雨",
+        "8":"中雨",
+        "9":"大雨",
+        "10":"暴雨",
+        "11":"大暴雨",
+        "12":"特大暴雨",
+        "13":"阵雨",
+        "14":"小雪",
+        "15":"中雪",
+        "16":"大雪",
+        "17":"暴雪",
+        "18":"雾",
+        "19":"冻雨",
+        "20":"沙尘暴",
+        "21":"小到中雨",
+        "22":"中到大雨",
+        "23":"大到暴雨",
+        "24":"暴雨到大暴雨",
+        "25":"大暴雨到特大暴雨",
+        "26":"小到中雪",
+        "27":"中到大雪",
+        "28":"大到暴雪",
+        "29":"浮尘",
+        "30":"扬沙",
+        "31":"强沙尘暴",
+        "53":"霾",
+        "99":"无"
+    };
+    var getWeather = function (cityCode){
+        var result = "";
+        $.ajax({
+            "url":"/weather/"+cityCode,
+            "dataType":"text",
+            "async" : false,
+            "success":function(data){
+                result=data;
+            },
+            "error":function(){
+
+            }
+        });
+        return result;
+    }
+    var showWeather = function(cityCode){
+        var restr=getWeather(cityCode);
+        var weather=eval("("+restr+")");
+        var today=weather.f.f1[0];
+        var tomorrow=weather.f.f1[1];
+        var tomorrowt=weather.f.f1[2];
+        var temDiv=$("<div />").addClass("temDiv");
+        var cityDiv=$("<div />").text(weather.c.c3).addClass("cityDiv");
+        var day,night,dayt,nightt;
+        var dayDiv,nightDiv;
+        if(template[parseInt(today.fa)]){
+            day=template[parseInt(today.fa)];
+            dayt=today.fc+"℃";
+            dayDiv=$("<div />").append(day).append($("<br />")).append(dayt).addClass("dayDiv");
+        }else{
+            dayDiv=$("<div />").addClass("dayDiv");
+        }
+        night=template[parseInt(today.fb)];
+        nightt=today.fd+"℃";
+        nightDiv=$("<div />").append(night).append($("<br />")).append(nightt).addClass("nightDiv");
+        var todDiv=$("<div />").addClass("todDiv").append(dayDiv).append(nightDiv);
+        day=template[parseInt(tomorrow.fa)];
+        dayt=tomorrow.fc+"℃";
+        dayDiv=$("<div />").append(day).append($("<br />")).append(dayt).addClass("dayDiv");
+        night=template[parseInt(tomorrow.fb)];
+        nightt=tomorrow.fd+"℃";
+        nightDiv=$("<div />").append(night).append($("<br />")).append(nightt).addClass("nightDiv");
+        var tomDiv=$("<div />").addClass("tomDiv").append(dayDiv).append(nightDiv);
+        day=template[parseInt(tomorrowt.fa)];
+        dayt=tomorrowt.fc+"℃";
+        dayDiv=$("<div />").append(day).append($("<br />")).append(dayt).addClass("dayDiv");
+        night=template[parseInt(tomorrowt.fb)];
+        nightt=tomorrowt.fd+"℃";
+        nightDiv=$("<div />").append(night).append($("<br />")).append(nightt).addClass("nightDiv");
+        var tomtDiv=$("<div />").addClass("tomtDiv").append(dayDiv).append(nightDiv);
+        $(temDiv).append(cityDiv);
+        $(temDiv).append(todDiv);
+        $(temDiv).append(tomDiv);
+        $(temDiv).append(tomtDiv);
+        $("#weatherDiv").append(temDiv);
+    }
+    $(function(){
+        var cityArray=new Array();
+        cityArray.push("101290101");
+        cityArray.push("101290308");
+        cityArray.push("101230509");
+        for(var n in cityArray){
+            if(n){
+                showWeather(cityArray[n]);
+            }
+        }
+    })
+</script>
+</html>
