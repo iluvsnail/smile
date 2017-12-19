@@ -41,7 +41,7 @@ class UserController {
   }
 
   @RequestMapping(value = Array("/tmp"), method = Array(RequestMethod.GET)) def getTemp(session: HttpSession, request: HttpServletRequest): ModelAndView = {
-    request.setAttribute("dayCount", TimeUtil.getDayCount(2014, 9, 15))
+    request.setAttribute("dayCount", TimeUtil.getDayCount("20140915"))
     new ModelAndView("home")
   }
 

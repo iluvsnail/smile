@@ -16,65 +16,16 @@ object TimeUtil {
 
   }
 
-  def getDayCount(year: Int, month: Int, day: Int): String = {
-    val calendar = Calendar.getInstance
-    val know = getDays(year, month - 1, day)
-    val result = getDays(calendar.get(1), calendar.get(2), calendar.get(5)) - know
-    String.valueOf(result)
+  def getDayCount(date:String): String = {
+    val sdf = new SimpleDateFormat("yyyyMMdd")
+    val know = sdf.parse(date)
+    val knowTime = know.getTime
+    val now = System.currentTimeMillis
+
+    val day = (now - knowTime) / 1000 / 60 / 60 / 24
+    String.valueOf(day)
   }
 
-
-  def getDays(year: Int, month: Int, day: Int): Long = {
-    val yearDays = getYearDay(year)
-    val monthDays = getMonthDay(year, month)
-    val days = getDay(day)
-    yearDays + monthDays + days
-  }
-
-  private def getDay(day: Int) = day - 1
-
-  private def getMonthDay(year: Int, month: Int) = {
-    var monthDays = 0L
-    month match {
-      case 11 =>
-        monthDays += 30L
-      case 10 =>
-        monthDays += 31L
-      case 9 =>
-        monthDays += 30L
-      case 8 =>
-        monthDays += 31L
-      case 7 =>
-        monthDays += 31L
-      case 6 =>
-        monthDays += 30L
-      case 5 =>
-        monthDays += 31L
-      case 4 =>
-        monthDays += 30L
-      case 3 =>
-        monthDays += 31L
-      case 2 =>
-        monthDays += getFebDay(year)
-      case 1 =>
-        monthDays += 31L
-    }
-    monthDays
-  }
-
-  private def getFebDay(year: Int) = {
-    if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
-      29L
-    }else{
-      28L
-    }
-  }
-
-  private def getYearDay(year: Int) = {
-    val years = year - 2000
-    val leaps = years / 4 + 1
-    years * 365 + leaps
-  }
 
   @throws[ParseException]
   def getFormatTime(time: String): String = {

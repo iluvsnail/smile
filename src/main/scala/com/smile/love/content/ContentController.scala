@@ -39,8 +39,8 @@ class ContentController {
   }
 
   @RequestMapping(value = Array("/index")) def index(request: HttpServletRequest): ModelAndView = {
-    request.setAttribute("dayCount", TimeUtil.getDayCount(2014, 9, 15))
-    request.setAttribute("dayCount2", TimeUtil.getDayCount(2015, 4, 18))
+    request.setAttribute("dayCount", TimeUtil.getDayCount("20140915"))
+    request.setAttribute("dayCount2", TimeUtil.getDayCount("20150418"))
     request.setAttribute("allCount", contentService.getAllContentCount)
     val df = new SimpleDateFormat("yyyy年MM月dd日")
     request.setAttribute("date", df.format(new Date))
