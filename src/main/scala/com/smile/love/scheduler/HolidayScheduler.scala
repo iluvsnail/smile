@@ -2,6 +2,7 @@ package com.smile.love.scheduler
 
 import java.util.Calendar
 
+import com.smile.love.user.UserService
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
@@ -17,22 +18,34 @@ class HolidayScheduler {
     @Autowired
     private val restTemplate:RestTemplate = null
 
+    @Autowired
+    private val userService:UserService = null
+
     @Scheduled(cron = "0 0 0 * * ? ")
     def sayGoodHoliday()={
         val holiday=getHoliday()
         if(holiday!=null && !holiday.trim.isEmpty)
             restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/"+holiday+"快乐！",null,classOf[String])
-        else
-            restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/要开心，要快乐，要记得对自己好点！",null,classOf[String])
     }
 
+    def main(args: Array[String]): Unit = {
+       val h= getHoliday()
+        if (h!=null && !h.trim.isEmpty) {
+            println("not empty")
+        }else{
+            println("empty")
+        }
+    }
     @Scheduled(cron = "0 0 9 * * ? ")
     def sayGoodDay()={
         val holiday=getHoliday()
+        println("say good to family excute!")
         if(holiday!=null && !holiday.trim.isEmpty)
             restTemplate.postForObject("http://192.168.10.67:923/send/wechat/family/"+holiday+"快乐！要记得对自己好点！",null,classOf[String])
-        else
+        else{
+            restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/要开心，要快乐，要记得对自己好点！",null,classOf[String])
             restTemplate.postForObject("http://192.168.10.67:923/send/wechat/family/要开心，要快乐，要记得对自己好点！",null,classOf[String])
+        }
     }
 
     def getHoliday():String = {
