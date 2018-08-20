@@ -48,7 +48,7 @@ class HolidayScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0 18 * * ?")
+    @Scheduled(cron = "0 0 18 * * 2-6")
     def signHackpai()={
         restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/宝宝，想吃拔丝蛋糕么？",null,classOf[String])
     }
