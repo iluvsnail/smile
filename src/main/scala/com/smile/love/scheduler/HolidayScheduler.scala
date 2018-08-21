@@ -48,11 +48,16 @@ class HolidayScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0 18 * * 2-6")
+    @Scheduled(cron = "0 0 18 * * 1-5")
     def signHackpai()={
         restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/宝宝，想吃拔丝蛋糕么？",null,classOf[String])
     }
 
+    //@Scheduled(cron = "*/5 * * * * 1-5")
+    def testWeek()={
+
+        println("ok la")
+    }
 
     def getHoliday():String = {
         val document=Jsoup.connect("https://wannianrili.51240.com/").ignoreContentType(true).get();
