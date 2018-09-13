@@ -50,9 +50,9 @@
             stompClient.subscribe("/topic/response", function (msg) {
                 message = $.parseJSON(msg.body)
                 if(user==message.user){
-                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 my").append(message.msg)))
+                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 my").append(message.rtime).append("<br/>").append(message.msg)))
                 }else{
-                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 col-md-offset-5 friend").append(message.user+":"+message.msg)))
+                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 col-md-offset-5 friend").append(message.rtime).append("<br/>").append(message.user+":"+message.msg)))
 
                 }
                 $("#count").text(message.count)
@@ -94,6 +94,24 @@
 
     var users = "[[${online}]]"
     onlineUser(users)
+
+    $.ajax({
+        "url":"/chat/getChatHistory",
+        "method":"post",
+        "dataType":"json",
+        "success":function(history){
+
+            for(var n in history){
+                var message = history[n]
+                if(user==message.user){
+                    $("#chatDiv").prepend($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 my").append(message.rtime).append("<br/>").append(message.message)))
+                }else{
+                    $("#chatDiv").prepend($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 col-md-offset-5 friend").append(message.rtime).append("<br/>").append(message.user+":"+message.message)))
+
+                }
+            }
+        }
+    });
 </script>
 </body>
 </html>

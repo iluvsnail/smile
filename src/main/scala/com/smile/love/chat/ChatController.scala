@@ -1,5 +1,8 @@
 package com.smile.love.chat
 
+import java.util
+
+import com.smile.love.content.Content
 import com.smile.love.utils.OnlineHelper
 import javax.servlet.http.{HttpServletRequest, HttpSession}
 import org.slf4j.LoggerFactory
@@ -17,7 +20,7 @@ class ChatController {
   private val logger = LoggerFactory.getLogger(classOf[ChatController])
 
   @Autowired
-  private val chatService:ChatService = null
+  private val chatService:ChatHistoryService = null
 
 
   @RequestMapping(value = Array("/index")) def index(request: HttpServletRequest,session:HttpSession): ModelAndView = {
@@ -27,4 +30,9 @@ class ChatController {
     new ModelAndView("chat/index")
   }
 
+  @RequestMapping(value = Array("/getChatHistory"))
+  def getContentByPage(request: HttpServletRequest):util.List[ChatHistory] = {
+    val chatHistoryList = chatService.getChatHistory
+    chatHistoryList
+  }
 }
