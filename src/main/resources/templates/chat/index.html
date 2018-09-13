@@ -8,31 +8,73 @@
     <link rel="stylesheet" th:href="@{/css/chat.css}" />
 </head>
 <body>
+<div >
+    在线:<span id="count">[[${count}]]</span>
+</div>
 <div class="row">
-    <div class="col-md-10 col-md-offset-1 chatDiv">
-            <div class="col-md-5 my">
-                你好
-            </div>
-        <div class="col-md-5 col-md-offset-5 friend">
-            你也好
-        </div>
+    <div class="col-md-10 col-md-offset-1 chatDiv" id="chatDiv">
     </div>
+</div>
+<div>
     <div class="col-md-10 col-md-offset-1">
         <div class="form-group col-md-7">
-            <input class="form-control" id="contexInput" placeholder="输入内容">
+            <input class="form-control" id="name" placeholder="输入内容">
         </div>
-        <div class="btn btn-primary col-md-2"  id="sendBtn">发送</div>
+        <div class="btn btn-primary col-md-2"  id="send">发送</div>
     </div>
-
 </div>
+
 <script type="text/javascript"
         th:src="@{/js/jquery.js}"></script>
 <script type="text/javascript"
         th:src="@{/js/bootstrap.js}"></script>
 <script type="text/javascript"
-        th:src="@{/js/chat.js}"></script>
+        th:src="@{/js/sockjs.min.js}"></script>
+<script type="text/javascript"
+        th:src="@{/js/stomp.min.js}"></script>
 <script type="text/javascript">
+    var stompClient = null;
 
+    function connect() {
+        var socket = new SockJS("/endpoint");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/topic/response", function (msg) {
+                message = $.parseJSON(msg.body)
+                if(user==message.user){
+                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 my").append(message.msg)))
+                }else{
+                    $("#chatDiv").append($("<div/>").addClass("row").append($("<div />").addClass("col-md-5 col-md-offset-5 friend").append(message.user+":"+message.msg)))
+
+                }
+                $("#count").text(message.count)
+            });
+        });
+
+    }
+
+    function disconnect() {
+        if(stompClient!=null){
+            stompClient.disconnect();
+        }
+    }
+
+    function send() {
+        var name = document.getElementById("name").value;
+        $("#name").val("");
+        stompClient.send("/message/test", {}, JSON.stringify({
+            'msg': name,
+            'user':user
+        }));
+    }
+    connect()
+    document.getElementById("send").onclick = send;
+    user = "[[${user.name}]]"
+    $(document).on("keypress", "#name", function(e) {
+        if(e.keyCode == 13) {
+            send()
+        }
+    });
 </script>
 </body>
 </html>
