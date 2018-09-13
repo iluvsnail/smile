@@ -1,8 +1,8 @@
 package com.smile.love.chat;
 
-class MessageSender(val msg:String,val user:String,val count:Int) {
+class MessageSender(val msg:String,val user:String,val count:Int,val ou:String) {
     def this()={
-        this("","",1)
+        this("","",1,"")
     }
 
     def getMsg():String = {
@@ -13,5 +13,8 @@ class MessageSender(val msg:String,val user:String,val count:Int) {
     }
     def getCount():Int ={
         count
+    }
+    def getOu():String = {
+        ou
     }
 }

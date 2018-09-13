@@ -9,7 +9,7 @@ class OnlineHelper {
     var listBuffer=  new ListBuffer[User]
 }
 object OnlineHelper {
-    val onlineHelper = new OnlineHelper
+    private val  onlineHelper= new OnlineHelper
     def  addUser(user:User):Unit={
         onlineHelper.listBuffer += user
     }
@@ -21,5 +21,16 @@ object OnlineHelper {
     }
     def isOnline(user:User):Boolean = {
         onlineHelper.listBuffer.contains(user)
+    }
+    def getOnlineUsers():String = {
+        var rst=""
+        onlineHelper.listBuffer.foreach(user=>{
+            if(!rst.isEmpty){
+                rst+="@,@"+user.getName
+            }else{
+                rst=user.getName
+            }
+        })
+        rst
     }
 }

@@ -16,7 +16,7 @@ class SocketController {
     @MessageMapping(value = Array("/message/test"))
     @SendTo(value = Array("/topic/response"))
     def say(acceptor: MessageAcceptor): MessageSender =  {
-        new MessageSender(acceptor.getMsg,acceptor.getUser,OnlineHelper.count())
+        new MessageSender(acceptor.getMsg,acceptor.getUser,OnlineHelper.count(),OnlineHelper.getOnlineUsers())
     }
 
 }
