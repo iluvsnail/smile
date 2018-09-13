@@ -40,6 +40,16 @@ class UserController {
     new ModelAndView("redirect:/index")
   }
 
+    @RequestMapping(value = Array("/loginOut"))
+    def logout(session:HttpSession):ModelAndView ={
+        val user = session.getAttribute("user")
+        if(user!=null)
+        OnlineHelper.removeUser(user.asInstanceOf[User])
+        session.removeAttribute("user")
+        session.setMaxInactiveInterval(10)
+        new ModelAndView(("redirect:/index"))
+    }
+
   @RequestMapping(value = Array("/tmp"), method = Array(RequestMethod.GET)) def getTemp(session: HttpSession, request: HttpServletRequest): ModelAndView = {
     request.setAttribute("dayCount", TimeUtil.getDayCount("20140915"))
     new ModelAndView("home")
