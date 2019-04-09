@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.ServletComponentScan
+import org.springframework.scheduling.annotation.EnableScheduling
 
 /**
   * User: chenyl 
@@ -13,6 +14,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan(basePackages = Array("com.smile.love"))
+@EnableScheduling
 class SmileApplication{
 
 }
