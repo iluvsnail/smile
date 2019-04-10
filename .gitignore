@@ -1,6 +1,7 @@
 .idea
 .gradle
-.out
-.build
+out
+build
+project
 *.iml
 src/main/resources/rebel.xml
