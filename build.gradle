@@ -67,7 +67,7 @@ wrapper{
 }
 
 jar {
-    baseName = 'vlog'
+    baseName = 'smile'
     version =  '1.0-SNAPSHOT'
 }
 
