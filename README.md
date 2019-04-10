@@ -1,0 +1,1 @@
+docker run -p 8080:8443 -t --name=smile --link mdb:mdb com.smile/vlog:1.0-SNAPSHOT
