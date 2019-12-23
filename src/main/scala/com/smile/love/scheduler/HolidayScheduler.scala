@@ -21,7 +21,7 @@ class HolidayScheduler {
     @Autowired
     private val userService:UserService = null
 
-    @Scheduled(cron = "0 0 0 * * ? ")
+    //@Scheduled(cron = "0 0 0 * * ? ")
     def sayGoodHoliday()={
         val holiday=getHoliday()
         if(holiday!=null && !holiday.trim.isEmpty)
@@ -36,7 +36,7 @@ class HolidayScheduler {
             println("empty")
         }
     }
-    @Scheduled(cron = "0 0 9 * * ? ")
+    //@Scheduled(cron = "0 0 9 * * ? ")
     def sayGoodDay()={
         val holiday=getHoliday()
         println("say good to family excute!")
@@ -48,7 +48,7 @@ class HolidayScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0 18 * * 1-5")
+    //@Scheduled(cron = "0 0 18 * * 1-5")
     def signHackpai()={
         restTemplate.postForObject("http://192.168.10.67:923/send/wechat/smile/宝宝，想吃拔丝蛋糕么？",null,classOf[String])
     }
