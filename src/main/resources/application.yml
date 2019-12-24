@@ -18,6 +18,17 @@ spring:
   servlet:
     multipart:
       max-file-size: -1
+redis:
+  host:
+    ip: 192.168.1.69
+    port: 16378
+mail:
+  host: smtp.sina.com
+  port: 25
+  user: test_gfire
+  pass: xujiao0923
+  from: test_gfire@sina.com
+  ssl: false
 
 #undertown配置
 # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
